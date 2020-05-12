@@ -1,0 +1,4 @@
+C:\Users\TrangUyen\source\repos\EFCoreProject\EFCoreProject\bin\Debug\netcoreapp3.1\EFCoreProject.exe
+C:\Users\TrangUyen\source\repos\EFCoreProject\EFCoreProject\obj\Debug\netcoreapp3.1\EFCoreProject.csprojAssemblyReference.cache
+C:\Users\TrangUyen\source\repos\EFCoreProject\EFCoreProject\obj\Debug\netcoreapp3.1\EFCoreProject.AssemblyInfoInputs.cache
+C:\Users\TrangUyen\source\repos\EFCoreProject\EFCoreProject\obj\Debug\netcoreapp3.1\EFCoreProject.AssemblyInfo.cs
