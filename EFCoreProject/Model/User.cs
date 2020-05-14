@@ -24,5 +24,12 @@ namespace EFCoreProject.Model
             this.Videos = new HashSet<Video>();
             this.Comments = new HashSet<Comment>();
         }
+
+        public override string ToString()
+        {
+            return $"User Information: \n" +
+                $"Nickname: {Nickname}\n" +
+                $"Mail: {Mail}\n";
+        }
     }
 }

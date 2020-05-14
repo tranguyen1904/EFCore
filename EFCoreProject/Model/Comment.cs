@@ -18,5 +18,13 @@ namespace EFCoreProject.Model
 
         public virtual User User { get; set; }
         public virtual Video Video { get; set; }
+
+        public override string ToString()
+        {
+            return $"Comment information: \n" +
+                $"UserId: {UserId}\n" +
+                $"VideoId: {VideoId}\n" +
+                $"Content: {Content}\n";
+        }
     }
 }

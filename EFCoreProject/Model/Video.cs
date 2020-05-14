@@ -32,5 +32,13 @@ namespace EFCoreProject.Model
             this.ActivityStreams = new HashSet<ActivityStream>();
         }
 
+        public override string ToString()
+        {
+            return $"Video information:\n" +
+                $"- Title: {this.Title}\n" +
+                $"- Time: {this.Time}\n" +
+                $"- Qualify: {this.Quality}\n";
+            
+        }
     }
 }
