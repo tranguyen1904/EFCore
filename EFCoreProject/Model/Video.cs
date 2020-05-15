@@ -24,12 +24,12 @@ namespace EFCoreProject.Model
 
         public virtual ICollection<Comment> Comments { get; set; }
 
-        public virtual ICollection<ActivityStream> ActivityStreams { get; set; }
+        public virtual ICollection<ActivityDetail> ActivityDetails { get; set; }
 
         public Video()
         {
             this.Comments = new HashSet<Comment>();
-            this.ActivityStreams = new HashSet<ActivityStream>();
+            this.ActivityDetails = new HashSet<ActivityDetail>();
         }
 
         public override string ToString()

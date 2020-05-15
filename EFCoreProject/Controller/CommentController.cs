@@ -18,11 +18,13 @@ namespace EFCoreProject.Controller
         public void Add(Comment comment)
         {
             this._context.Comment.Add(comment);
+            this._context.SaveChanges();
         }
 
-        public void AddRange(List<Comment> comments)
+        public void AddRange(IEnumerable<Comment> comments)
         {
             this._context.Comment.AddRange(comments);
+            this._context.SaveChanges();
         }
 
         public Comment Get(Guid id)

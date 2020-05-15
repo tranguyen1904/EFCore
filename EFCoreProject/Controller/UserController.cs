@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace EFCoreProject.Controller
@@ -15,20 +16,31 @@ namespace EFCoreProject.Controller
             this._context = context;
         }
 
-        public User Get(Guid guid)
+        public User GetById(Guid guid)
         {
             return this._context.User.Find(guid);
         }
 
-        public void Add(User user)
+        public User GetByName(String name)
         {
-
-            this._context.User.Add(user);
+            return this._context.User.Where(x => x.Nickname == name).FirstOrDefault();
         }
 
-        public void AddRange(List<User> users)
+        public User GetByEmail(String mail)
+        {
+            return this._context.User.Where(x => x.Mail == mail).FirstOrDefault();
+        }
+
+        public void Add(User user)
+        {
+            this._context.User.Add(user);
+            this._context.SaveChanges();
+        }
+
+        public void AddRange(IEnumerable<User> users)
         {
             this._context.User.AddRange(users);
+            this._context.SaveChanges();
         }
 
         public List<User> GetAllUserAuthorHDVideo()

@@ -21,7 +21,7 @@ namespace EFCoreProject.Controller
             this._context.SaveChanges();
         }
 
-        public void AddRange(List<Video> videos)
+        public void AddRange(IEnumerable<Video> videos)
         {
             this._context.Video.AddRange(videos);
             this._context.SaveChanges();
@@ -42,17 +42,19 @@ namespace EFCoreProject.Controller
             return this._context.Video.Select(v => v.Title).ToList();
         }
 
-        public List<String> GetTitleOfvideosAuthorByUser(Guid userId)
+        public List<String> GetTitleOfvideosAuthorByUser(User user)
         {
-            var result = this._context.Video.Where(v => v.UserId == userId).Select(v => v.Title).ToList();
+            if (user == null) return new List<string>();
+            var result = this._context.Video.Where(v => v.UserId == user.Id).Select(v => v.Title).ToList();
             return result;
         }
 
-        public List<String> GetTitleOfVideosAuthorByUserOneThatUserTwoComment(Guid userId1, Guid userId2)
+        public List<String> GetTitleOfVideosAuthorByUserOneThatUserTwoComment(User user1, User user2)
         {
+            if (user1 == null || user2 == null) return new List<string>();
             var result = this._context.Video
                 .Include(x => x.Comments)
-                .Where(v => v.UserId == userId1 && v.Comments.Any(c => c.UserId == userId2))
+                .Where(v => v.UserId == user1.Id && v.Comments.Any(c => c.UserId == user2.Id))
                 .Select(v => v.Title).ToList();
             return result;
         }

@@ -17,11 +17,13 @@ namespace EFCoreProject.Controller
         public void Add(ActivityStream activityStream)
         {
             this._context.ActivityStream.Add(activityStream);
+            this._context.SaveChanges();
         }
 
-        public void AddRange(List<ActivityStream> activityStreams)
+        public void AddRange(IEnumerable<ActivityStream> activityStreams)
         {
             this._context.ActivityStream.AddRange(activityStreams);
+            this._context.SaveChanges();
         }
 
         public ActivityStream Get(Guid id)

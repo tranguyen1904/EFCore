@@ -17,7 +17,7 @@ namespace EFCoreProject
         public MainProcessing()
         {
             var contextOptions = new DbContextOptionsBuilder<EFDbContext>()
-                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .UseInMemoryDatabase("Database")
                 .Options;
             this._context = new EFDbContext(contextOptions);
             userController = new UserController(this._context);
@@ -26,58 +26,107 @@ namespace EFCoreProject
             activityStreamController = new ActivityStreamController(this._context);
         }
 
+        #region Add Method
+
+        public void AddVideo(Video video)
+        {
+            this.videoController.Add(video);
+        }
+
+        public void AddVideos(IEnumerable<Video> video)
+        {
+            this.videoController.AddRange(video);
+        }
+
+        public void AddUser(User user)
+        {
+            this.userController.Add(user);
+        }
+
+        public void AddUsers(IEnumerable<User> users)
+        {
+            this.userController.AddRange(users);
+        }
+
+        public void AddComment(Comment comment)
+        {
+            this.commentController.Add(comment);
+        }
+
+        public void AddComments(IEnumerable<Comment> comments)
+        {
+            this.commentController.AddRange(comments);
+        }
+
+        public void AddActivityStream(ActivityStream activityStream)
+        {
+            this.activityStreamController.Add(activityStream);
+        }
+
+        public void AddAvtivityStreams(IEnumerable<ActivityStream> activityStreams)
+        {
+            this.activityStreamController.AddRange(activityStreams);
+        }
+        #endregion
+
+        #region Get Method
+
         public List<String> GetTitleOfAllVideo()
         {
             return this.videoController.GetTitleOfAllVideo();
         }
 
-        public List<String> GetTitleOfvideosAuthorByUser(Guid userId)
+        public List<string> GetTitleOfvideosAuthorByUser(User user)
         {
-
-            return this.GetTitleOfvideosAuthorByUser();
+            return this.videoController.GetTitleOfvideosAuthorByUser(user);
         }
 
-        public List<String> GetTitleOfvideosAuthorByUser(string userName)
+        public List<string> GetTitleOfvideosAuthorByUserId(Guid userId)
         {
-            User user = userController.Get(userName);
-            return this.videoController.GetTitleOfvideosAuthorByUser(user.Id);
+            User user = userController.GetById(userId);
+            return GetTitleOfvideosAuthorByUser(user);
         }
 
-        public List<String> GetTitleOfvideosAuthorByUser(Guid userId)
+        public List<string> GetTitleOfvideosAuthorByUserName(string userName)
         {
-
-            return this.GetTitleOfvideosAuthorByUser();
+            User user = userController.GetByName(userName);
+            return GetTitleOfvideosAuthorByUser(user);
         }
 
-        public List<String> GetTitleOfVideosAuthorByUserOneThatUserTwoComment(Guid userId1, Guid userId2)
+        public List<string> GetTitleOfvideosAuthorByUserMail(string userMail)
         {
-            var result = this._context.Video
-                .Include(x => x.Comments)
-                .Where(v => v.UserId == userId1 && v.Comments.Any(c => c.UserId == userId2))
-                .Select(v => v.Title).ToList();
-            return result;
+            User user = userController.GetByEmail(userMail);
+            return GetTitleOfvideosAuthorByUser(user);
+        }
+
+        public List<string> GetTitleOfVideosAuthorByUserOneThatUserTwoComment(User user1, User user2)
+        {
+            return this.videoController.GetTitleOfVideosAuthorByUserOneThatUserTwoComment(user1, user2);
+        }
+
+        public List<string> GetTitleOfVideosAuthorByUserOneThatUserTwoComment_ByName(string userName1, string userName2)
+        {
+            User user1 = this.userController.GetByName(userName1);
+            User user2 = this.userController.GetByName(userName2);
+            return GetTitleOfVideosAuthorByUserOneThatUserTwoComment(user1, user2);
+        }
+
+        public List<string> GetTitleOfVideosAuthorByUserOneThatUserTwoComment_ByMail(string userMail1, string userMail2)
+        {
+            User user1 = this.userController.GetByName(userMail1);
+            User user2 = this.userController.GetByName(userMail2);
+            return GetTitleOfVideosAuthorByUserOneThatUserTwoComment(user1, user2);
         }
 
         public List<String> GetTitleOfVideosReceivedCommentLastWeek()
         {
-            var result = this._context.Video
-                .Include(x => x.Comments)
-                .AsEnumerable()
-                .Where(x => x.Comments.Any(c => c.Time >= DateTime.Now.AddDays(-7)))
-                .Select(v => v.Title).ToList();
-            return result;
+            return this.videoController.GetTitleOfVideosReceivedCommentLastWeek();
         }
 
         public Object GetVideoReceivedTheMostComment()
         {
-            var result = this._context.Video
-                .Include(x => x.Comments)
-                .SelectMany(x => x.Comments)
-                .GroupBy(x => x.Id)
-                .Select(x => new { Id = x.Key, Count = x.Count() })
-                .OrderByDescending(x => x.Count)
-                .FirstOrDefault();
-            return result;
+            return this.videoController.GetVideoReceivedTheMostComment();
         }
+        #endregion
     }
 }

@@ -7,6 +7,8 @@ namespace EFCoreProject
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+            Testing test = new Testing();
+            test.Test();
         }
     }
 }
