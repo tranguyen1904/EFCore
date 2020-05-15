@@ -68,6 +68,11 @@ namespace EFCoreProject.Controller
                 .Select(v=>v.Title).ToList();
             return result;
         }
+        public struct VideoWithNumComment
+        {
+            string Title;
+            int NumOfComment;
+        }
 
         public Object GetVideoReceivedTheMostComment()
         {
@@ -75,7 +80,7 @@ namespace EFCoreProject.Controller
                 .Include(x => x.Comments)
                 .SelectMany(x => x.Comments)
                 .GroupBy(x => x.Id)
-                .Select(x => new { Id = x.Key, Count = x.Count() })
+                .Select(x => new VideoWithNumComment{ Title = x., Count = x.Count() })
                 .OrderByDescending(x=>x.Count)
                 .FirstOrDefault();
             return result;
